@@ -24,7 +24,6 @@ export default function Message() {
 
   const [imgUrl, setImgUrl] = useState('');
   const [isCreatedProfile, setIsCreatedProfile] = useState(true);
-  const [isCreatedFnRun, setIsCreatedFnRun] = useState(false);
   const [friendList, setFriendList] = useState([]);
   const [messageList, setMessageList] = useState([]);
   const [showMessageModal, setShowMessageModal] = useState(false);
@@ -83,21 +82,39 @@ export default function Message() {
     }
   };
 
+  // Connection establishment.
   useEffect(() => {
-    //connect to contract
-    if (!actingAccount) return;
-
     connectToContract({
-      api: api,
-      accountList: accountList,
-      actingAccount: actingAccount,
-      isSetup: isSetup,
       setApi: setApi,
       setAccountList: setAccountList,
       setActingAccount: setActingAccount,
       setIsSetup: setIsSetup,
     });
+  }, []);
+
+  // Profile check and creation.
+  useEffect(() => {
+    // Confirm if the connection establishes.
     if (!isSetup) return;
+
+    // Check parameters exist to pass proper values.
+    if (!api || !actingAccount?.address) return;
+
+    checkCreatedInfo({
+      api: api,
+      userId: actingAccount.address,
+      setIsCreatedProfile: setIsCreatedProfile,
+    });
+
+    // Initial value is true, then first attempt skips.
+    // Based on checkCreatedInfo result, createProfile runs.
+    if (!isCreatedProfile) createProfile({ api: api, actingAccount: actingAccount });
+  }, [isSetup, isCreatedProfile]);
+
+  useEffect(() => {
+    //connect to contract
+    if (!isSetup || !api) return;
+    if (!actingAccount) return;
 
     // get profile
     getProfileForMessage({
@@ -116,22 +133,7 @@ export default function Message() {
       actingAccount: actingAccount,
       setBalance: setBalance,
     });
-
-    // check if already created profile in frontend
-    if (isCreatedFnRun) return;
-
-    if (!api) return;
-    // check if already created profile in contract
-    checkCreatedInfo({
-      api: api,
-      userId: actingAccount?.address,
-      setIsCreatedProfile: setIsCreatedProfile,
-    });
-    if (isCreatedProfile) return;
-    // create profile
-    createProfile({ api: api, actingAccount: actingAccount });
-    setIsCreatedFnRun(true);
-  }, [actingAccount, api, accountList, isSetup, isCreatedFnRun, isCreatedProfile]);
+  }, [isSetup]);
 
   return !showMessageModal ? (
     <div className="flex justify-center items-center bg-gray-200 w-screen h-screen relative">

@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   images: {
-    domains: ['images.unsplash.com', 'plus.unsplash.com'],
+    domains: ['i.ibb.co'],
   },
   typescript: {
     // !! WARN !!

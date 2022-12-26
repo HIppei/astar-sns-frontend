@@ -15,9 +15,7 @@ import { checkCreatedInfo, createProfile, getProfileForHome } from '../hooks/pro
 
 export default function Home() {
   const [api, setApi] = useState<ApiPromise>();
-
   const [isCreatedProfile, setIsCreatedProfile] = useState(true);
-  const [isCreatedFnRun, setIsCreatedFnRun] = useState(false);
   const [showNewPostModal, setShowNewPostModal] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
   const [isDistributed, setIsDistributed] = useState(false);
@@ -28,22 +26,41 @@ export default function Home() {
   const [generalPostList, setGeneralPostList] = useState<PostType[]>([]);
   const [balance, setBalance] = useState<string>('0');
 
+  // Connection establishment.
   useEffect(() => {
-    if (!actingAccount) return;
     connectToContract({
-      api: api,
-      accountList: accountList,
-      actingAccount: actingAccount,
-      isSetup: isSetup,
       setApi: setApi,
       setAccountList: setAccountList,
       setActingAccount: setActingAccount,
       setIsSetup: setIsSetup,
     });
-    if (!isSetup || !api || !actingAccount?.address) return;
+  }, []);
+
+  // Profile check and creation.
+  useEffect(() => {
+    // Confirm if the connection establishes.
+    if (!isSetup) return;
+
+    // Check parameters exist to pass proper values.
+    if (!api || !actingAccount) return;
+
+    checkCreatedInfo({
+      api: api,
+      userId: actingAccount.address,
+      setIsCreatedProfile: setIsCreatedProfile,
+    });
+
+    // Initial value is true, then first attempt skips.
+    // Based on checkCreatedInfo result, createProfile runs.
+    if (!isCreatedProfile) createProfile({ api: api, actingAccount: actingAccount });
+  }, [isSetup, isCreatedProfile, actingAccount]);
+
+  // Set information for the screen.
+  useEffect(() => {
+    if (!isSetup || !isCreatedProfile || !api || !actingAccount) return;
     getProfileForHome({
       api: api,
-      userId: actingAccount?.address,
+      userId: actingAccount.address,
       setImgUrl: setImgUrl,
     });
     balenceOf({
@@ -51,24 +68,18 @@ export default function Home() {
       actingAccount: actingAccount,
       setBalance: setBalance,
     });
-    getGeneralPost({ api: api, setGeneralPostList: setGeneralPostList });
     if (isDistributed) return;
     distributeReferLikes({
       api: api,
       actingAccount: actingAccount,
     });
     setIsDistributed(true);
-    if (isCreatedFnRun) return;
-    if (!api) return;
-    checkCreatedInfo({
-      api: api,
-      userId: actingAccount?.address,
-      setIsCreatedProfile: setIsCreatedProfile,
-    });
-    if (isCreatedProfile) return;
-    createProfile({ api: api, actingAccount: actingAccount });
-    setIsCreatedFnRun(true);
-  }, [api, accountList, actingAccount, isSetup, isDistributed, isCreatedFnRun, isCreatedProfile]);
+  }, [isSetup, isDistributed, isCreatedProfile, actingAccount]);
+
+  useEffect(() => {
+    if (!isSetup || !isCreatedProfile || !api) return;
+    getGeneralPost({ api: api, setGeneralPostList: setGeneralPostList });
+  });
 
   return (
     <div className="flex justify-center items-center bg-gray-200 w-screen h-screen relative">
@@ -80,7 +91,7 @@ export default function Home() {
           actingAccount={actingAccount}
         />
         <TopBar idList={accountList} imgUrl={imgUrl} setActingAccount={setActingAccount} balance={balance} />
-        <div className="flex-1 overflow-scroll">
+        <div className="flex-1 overflow-auto">
           {generalPostList.map((post) => (
             <Post
               key={post.postId}

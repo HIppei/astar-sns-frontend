@@ -17,6 +17,23 @@ export default function Message(props: any) {
           </div>
         </div>
         <div className="h-full flex-1 flex-col justify-start">
+          {props.img_url && (
+            <Image
+              className="rounded-full h-10 w-10 mx-2 items-center"
+              src={props.img_url}
+              alt="profile_logo"
+              width={30}
+              height={30}
+              quality={100}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div className="w-full justify-start items-end flex mt-3 mb-1">
+      <div className="flex- flex items-center">
+        {props.img_url && (
           <Image
             className="rounded-full h-10 w-10 mx-2 items-center"
             src={props.img_url}
@@ -25,20 +42,7 @@ export default function Message(props: any) {
             height={30}
             quality={100}
           />
-        </div>
-      </div>
-    </div>
-  ) : (
-    <div className="w-full justify-start items-end flex mt-3 mb-1">
-      <div className="flex- flex items-center">
-        <Image
-          className="rounded-full h-10 w-10 mx-2 items-center"
-          src={props.img_url}
-          alt="profile_logo"
-          width={30}
-          height={30}
-          quality={100}
-        />
+        )}
         <div className="flex-row flex items-end justify-start">
           <div className={`mt-3`}>
             <div className="flex-row flex  items-center">

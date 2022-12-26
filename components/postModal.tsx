@@ -27,7 +27,7 @@ export default function PostModal(props: Props) {
     alert(`Image URL: ${event.target.imgUrl.value}\nDescription: ${event.target.description.value}`);
   };
   return (
-    <Modal className="flex items-center justify-center h-screen" isOpen={props.isOpen}>
+    <Modal ariaHideApp={false} className="flex items-center justify-center h-screen" isOpen={props.isOpen}>
       <InputGroup message="Post" submit={submit} afterOpenFn={props.afterOpenFn} />
     </Modal>
   );

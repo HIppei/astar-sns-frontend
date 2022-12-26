@@ -1,24 +1,20 @@
 {
   "source": {
-    "hash": "0x420ef7223b794d4a75e244781b2e7cc70651178650d378d8f63b23187826168d",
+    "hash": "0xe6720ad811bb6447d154a673523dfe2261ab305a8b4134071e42cc9e0aec0f67",
     "language": "ink! 3.3.0",
-    "compiler": "rustc 1.65.0-nightly"
+    "compiler": "rustc 1.68.0-nightly"
   },
   "contract": {
     "name": "astar_sns_contract",
     "version": "0.1.0",
-    "authors": [
-      "[your_name] <[your_email]>"
-    ]
+    "authors": ["[your_name] <[your_email]>"]
   },
   "V3": {
     "spec": {
       "constructors": [
         {
           "args": [],
-          "docs": [
-            "Constructor that initializes the `bool` value to the given `init_value`."
-          ],
+          "docs": ["Constructor that initializes the `bool` value to the given `init_value`."],
           "label": "new",
           "payable": true,
           "selector": "0x9bae9d5e"
@@ -48,27 +44,21 @@
             {
               "label": "description",
               "type": {
-                "displayName": [
-                  "String"
-                ],
+                "displayName": ["String"],
                 "type": 7
               }
             },
             {
               "label": "created_time",
               "type": {
-                "displayName": [
-                  "String"
-                ],
+                "displayName": ["String"],
                 "type": 7
               }
             },
             {
               "label": "post_img_url",
               "type": {
-                "displayName": [
-                  "String"
-                ],
+                "displayName": ["String"],
                 "type": 7
               }
             }
@@ -85,9 +75,7 @@
             {
               "label": "num",
               "type": {
-                "displayName": [
-                  "u128"
-                ],
+                "displayName": ["u128"],
                 "type": 9
               }
             }
@@ -97,9 +85,7 @@
           "mutates": false,
           "payable": false,
           "returnType": {
-            "displayName": [
-              "Vec"
-            ],
+            "displayName": ["Vec"],
             "type": 24
           },
           "selector": "0x66e1e2e7"
@@ -109,18 +95,14 @@
             {
               "label": "num",
               "type": {
-                "displayName": [
-                  "u128"
-                ],
+                "displayName": ["u128"],
                 "type": 9
               }
             },
             {
               "label": "account_id",
               "type": {
-                "displayName": [
-                  "AccountId"
-                ],
+                "displayName": ["AccountId"],
                 "type": 1
               }
             }
@@ -130,9 +112,7 @@
           "mutates": false,
           "payable": false,
           "returnType": {
-            "displayName": [
-              "Vec"
-            ],
+            "displayName": ["Vec"],
             "type": 24
           },
           "selector": "0xa3ed00f7"
@@ -142,9 +122,7 @@
             {
               "label": "post_id",
               "type": {
-                "displayName": [
-                  "u128"
-                ],
+                "displayName": ["u128"],
                 "type": 9
               }
             }
@@ -161,27 +139,21 @@
             {
               "label": "message",
               "type": {
-                "displayName": [
-                  "String"
-                ],
+                "displayName": ["String"],
                 "type": 7
               }
             },
             {
               "label": "message_list_id",
               "type": {
-                "displayName": [
-                  "u128"
-                ],
+                "displayName": ["u128"],
                 "type": 9
               }
             },
             {
               "label": "created_time",
               "type": {
-                "displayName": [
-                  "String"
-                ],
+                "displayName": ["String"],
                 "type": 7
               }
             }
@@ -198,18 +170,14 @@
             {
               "label": "message_list_id",
               "type": {
-                "displayName": [
-                  "u128"
-                ],
+                "displayName": ["u128"],
                 "type": 9
               }
             },
             {
               "label": "num",
               "type": {
-                "displayName": [
-                  "u128"
-                ],
+                "displayName": ["u128"],
                 "type": 9
               }
             }
@@ -219,9 +187,7 @@
           "mutates": false,
           "payable": false,
           "returnType": {
-            "displayName": [
-              "Vec"
-            ],
+            "displayName": ["Vec"],
             "type": 17
           },
           "selector": "0x648086a7"
@@ -231,9 +197,7 @@
             {
               "label": "message_list_id",
               "type": {
-                "displayName": [
-                  "u128"
-                ],
+                "displayName": ["u128"],
                 "type": 9
               }
             }
@@ -243,9 +207,7 @@
           "mutates": false,
           "payable": false,
           "returnType": {
-            "displayName": [
-              "Message"
-            ],
+            "displayName": ["Message"],
             "type": 18
           },
           "selector": "0x0d83c0a8"
@@ -264,18 +226,14 @@
             {
               "label": "name",
               "type": {
-                "displayName": [
-                  "String"
-                ],
+                "displayName": ["String"],
                 "type": 7
               }
             },
             {
               "label": "img_url",
               "type": {
-                "displayName": [
-                  "String"
-                ],
+                "displayName": ["String"],
                 "type": 7
               }
             }
@@ -292,9 +250,7 @@
             {
               "label": "followed_account_id",
               "type": {
-                "displayName": [
-                  "AccountId"
-                ],
+                "displayName": ["AccountId"],
                 "type": 1
               }
             }
@@ -311,9 +267,7 @@
             {
               "label": "account_id",
               "type": {
-                "displayName": [
-                  "AccountId"
-                ],
+                "displayName": ["AccountId"],
                 "type": 1
               }
             }
@@ -323,9 +277,7 @@
           "mutates": false,
           "payable": false,
           "returnType": {
-            "displayName": [
-              "Vec"
-            ],
+            "displayName": ["Vec"],
             "type": 5
           },
           "selector": "0x8c3a17fb"
@@ -335,9 +287,7 @@
             {
               "label": "account_id",
               "type": {
-                "displayName": [
-                  "AccountId"
-                ],
+                "displayName": ["AccountId"],
                 "type": 1
               }
             }
@@ -347,9 +297,7 @@
           "mutates": false,
           "payable": false,
           "returnType": {
-            "displayName": [
-              "Vec"
-            ],
+            "displayName": ["Vec"],
             "type": 5
           },
           "selector": "0x2b5eb1ba"
@@ -359,9 +307,7 @@
             {
               "label": "account_id",
               "type": {
-                "displayName": [
-                  "AccountId"
-                ],
+                "displayName": ["AccountId"],
                 "type": 1
               }
             }
@@ -371,9 +317,7 @@
           "mutates": false,
           "payable": false,
           "returnType": {
-            "displayName": [
-              "Profile"
-            ],
+            "displayName": ["Profile"],
             "type": 4
           },
           "selector": "0x7e52b853"
@@ -383,9 +327,7 @@
             {
               "label": "account_id",
               "type": {
-                "displayName": [
-                  "AccountId"
-                ],
+                "displayName": ["AccountId"],
                 "type": 1
               }
             }
@@ -395,9 +337,7 @@
           "mutates": false,
           "payable": false,
           "returnType": {
-            "displayName": [
-              "bool"
-            ],
+            "displayName": ["bool"],
             "type": 25
           },
           "selector": "0xa95014f2"
@@ -407,9 +347,7 @@
             {
               "label": "account_id",
               "type": {
-                "displayName": [
-                  "AccountId"
-                ],
+                "displayName": ["AccountId"],
                 "type": 1
               }
             }
@@ -419,9 +357,7 @@
           "mutates": false,
           "payable": false,
           "returnType": {
-            "displayName": [
-              "u128"
-            ],
+            "displayName": ["u128"],
             "type": 9
           },
           "selector": "0xf609ad7e"
@@ -431,9 +367,7 @@
             {
               "label": "account_id",
               "type": {
-                "displayName": [
-                  "AccountId"
-                ],
+                "displayName": ["AccountId"],
                 "type": 1
               }
             }
@@ -443,9 +377,7 @@
           "mutates": false,
           "payable": false,
           "returnType": {
-            "displayName": [
-              "u128"
-            ],
+            "displayName": ["u128"],
             "type": 9
           },
           "selector": "0x0f755a56"
@@ -455,18 +387,14 @@
             {
               "label": "to_id",
               "type": {
-                "displayName": [
-                  "AccountId"
-                ],
+                "displayName": ["AccountId"],
                 "type": 1
               }
             },
             {
               "label": "amount",
               "type": {
-                "displayName": [
-                  "u128"
-                ],
+                "displayName": ["u128"],
                 "type": 9
               }
             }
@@ -572,12 +500,7 @@
               "type": 4
             }
           ],
-          "path": [
-            "openbrush_lang",
-            "storage",
-            "mapping",
-            "Mapping"
-          ]
+          "path": ["openbrush_lang", "storage", "mapping", "Mapping"]
         }
       },
       {
@@ -593,11 +516,7 @@
               ]
             }
           },
-          "path": [
-            "ink_env",
-            "types",
-            "AccountId"
-          ]
+          "path": ["ink_env", "types", "AccountId"]
         }
       },
       {
@@ -668,11 +587,7 @@
               ]
             }
           },
-          "path": [
-            "astar_sns_contract",
-            "metadata",
-            "Profile"
-          ]
+          "path": ["astar_sns_contract", "metadata", "Profile"]
         }
       },
       {
@@ -713,9 +628,7 @@
               "type": 7
             }
           ],
-          "path": [
-            "Option"
-          ]
+          "path": ["Option"]
         }
       },
       {
@@ -758,10 +671,7 @@
         "id": 11,
         "type": {
           "def": {
-            "tuple": [
-              1,
-              4
-            ]
+            "tuple": [1, 4]
           }
         }
       },
@@ -787,12 +697,7 @@
               "type": 13
             }
           ],
-          "path": [
-            "openbrush_lang",
-            "storage",
-            "mapping",
-            "Mapping"
-          ]
+          "path": ["openbrush_lang", "storage", "mapping", "Mapping"]
         }
       },
       {
@@ -844,11 +749,7 @@
               ]
             }
           },
-          "path": [
-            "astar_sns_contract",
-            "metadata",
-            "Post"
-          ]
+          "path": ["astar_sns_contract", "metadata", "Post"]
         }
       },
       {
@@ -865,10 +766,7 @@
         "id": 15,
         "type": {
           "def": {
-            "tuple": [
-              9,
-              13
-            ]
+            "tuple": [9, 13]
           }
         }
       },
@@ -894,12 +792,7 @@
               "type": 17
             }
           ],
-          "path": [
-            "openbrush_lang",
-            "storage",
-            "mapping",
-            "Mapping"
-          ]
+          "path": ["openbrush_lang", "storage", "mapping", "Mapping"]
         }
       },
       {
@@ -936,11 +829,7 @@
               ]
             }
           },
-          "path": [
-            "astar_sns_contract",
-            "metadata",
-            "Message"
-          ]
+          "path": ["astar_sns_contract", "metadata", "Message"]
         }
       },
       {
@@ -957,10 +846,7 @@
         "id": 20,
         "type": {
           "def": {
-            "tuple": [
-              9,
-              17
-            ]
+            "tuple": [9, 17]
           }
         }
       },
@@ -986,12 +872,7 @@
               "type": 9
             }
           ],
-          "path": [
-            "openbrush_lang",
-            "storage",
-            "mapping",
-            "Mapping"
-          ]
+          "path": ["openbrush_lang", "storage", "mapping", "Mapping"]
         }
       },
       {
@@ -1008,10 +889,7 @@
         "id": 23,
         "type": {
           "def": {
-            "tuple": [
-              1,
-              9
-            ]
+            "tuple": [1, 9]
           }
         }
       },

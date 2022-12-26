@@ -13,14 +13,16 @@ type Props = {
 
 const HeaderProfile: FC<Props> = (props) => {
   return (
-    <div className="flex-row flex items-center ml-[30px]">
-      <Image
-        className="w-[70px] h-[70px] rounded-full mr-3"
-        src={props.imgUrl}
-        alt="profile_logo"
-        width={30}
-        height={30}
-      />
+    <div className="flex-row flex items-center">
+      {props.imgUrl && (
+        <Image
+          className="w-[70px] h-[70px] rounded-full mr-3"
+          src={props.imgUrl}
+          alt="profile_logo"
+          width={30}
+          height={30}
+        />
+      )}
       <div className="mr-3">
         <div>wallet address</div>
         <select

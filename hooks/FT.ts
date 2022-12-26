@@ -63,8 +63,7 @@ export const distributeReferLikes = async (props: PropsDRL) => {
   const contract = new ContractPromise(props.api!, abi, contractAddress);
   const performingAccount = props.actingAccount;
   const injector = await web3FromSource(performingAccount.meta.source);
-  const date = new Date();
-  const transfer = await contract.tx.distributeReferLikes({
+  const transfer = contract.tx.distributeReferLikes({
     value: 0,
     gasLimit: 100000,
   });

@@ -12,14 +12,16 @@ export const MessageBar: FC<Props> = (props: Props) => {
   return (
     <>
       <div className="bg-[#ADE9F6] h-24 w-full flex flex-row items-center justify-center">
-        <Image
-          className="rounded-full h-16 w-16 mx-2"
-          src={props.userImgUrl}
-          alt="profile_logo"
-          width={30}
-          height={30}
-          quality={100}
-        />
+        {props.userImgUrl && (
+          <Image
+            className="rounded-full h-16 w-16 mx-2"
+            src={props.userImgUrl}
+            alt="profile_logo"
+            width={30}
+            height={30}
+            quality={100}
+          />
+        )}
         <div className="font-semibold text-4xl text-ellipsis overflow-hidden w-[200px]  items-center  justify-center">
           {props.userName}
         </div>

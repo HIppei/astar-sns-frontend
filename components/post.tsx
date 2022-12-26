@@ -20,7 +20,16 @@ export default function Post(props: any) {
             <div className="text-gray-400">{props.time}</div>
           </div>
           <div className="text-xl w-full">{props.description}</div>
-          <Image className="mr-3" src={props.post_img_url} alt="profile_logo" width={250} height={250} quality={100} />
+          {props.post_img_url && (
+            <Image
+              className="mr-3"
+              src={props.post_img_url}
+              alt="profile_logo"
+              width={250}
+              height={250}
+              quality={100}
+            />
+          )}
           <div className="flex flex-row w-full pl-[85px] items-center">
             <div className="text-xl mr-1">{props.num_of_likes}</div>
             <AiFillHeart

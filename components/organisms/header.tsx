@@ -18,7 +18,7 @@ const Header: FC<Props> = (props: Props) => {
   return (
     <div className="bg-[#ADE9F6] h-24 w-full flex items-center justify-center">
       <AppLogo />
-      <div className="z-30 flex-1 flex items-center justify-center text-xl flex-col text-[#0009DC]">
+      <div className="z-30 flex-1 flex items-center w-16 justify-center text-xl flex-col text-[#0009DC]">
         <Balance balance={props.balance} />
       </div>
       {props.selectedScreen === 'profile' ? (

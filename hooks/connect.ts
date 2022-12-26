@@ -4,10 +4,6 @@ import { Dispatch } from 'react';
 
 // コントラクトとの接続を行うために使用するtype
 type Props = {
-  api: ApiPromise | undefined;
-  accountList: InjectedAccountWithMeta[];
-  actingAccount: InjectedAccountWithMeta;
-  isSetup: boolean;
   setApi: Dispatch<React.SetStateAction<ApiPromise | undefined>>;
   setAccountList: Dispatch<React.SetStateAction<InjectedAccountWithMeta[]>>;
   setActingAccount: Dispatch<React.SetStateAction<InjectedAccountWithMeta | undefined>>;

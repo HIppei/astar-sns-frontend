@@ -34,26 +34,39 @@ export default function Profile() {
   const [followerList, setFollowerList] = useState<Array<string>>([]);
   const [balance, setBalance] = useState<string>('0');
 
+  // Connection establishment.
   useEffect(() => {
-    if (!actingAccount) return;
-
     connectToContract({
-      api: api,
-      accountList: accountList,
-      actingAccount: actingAccount,
-      isSetup: isSetup,
       setApi: setApi,
       setAccountList: setAccountList,
       setActingAccount: setActingAccount,
       setIsSetup: setIsSetup,
     });
-    if (!isSetup) return;
-    getProfileForProfile({
+  }, []);
+
+  // Profile check and creation.
+  useEffect(() => {
+    // Confirm if the connection establishes.
+    if (!isSetup || isCreatedFnRun) return;
+
+    // Check parameters exist to pass proper values.
+    if (!api || !actingAccount?.address) return;
+
+    checkCreatedInfo({
       api: api,
-      userId: actingAccount?.address,
-      setImgUrl: setImgUrl,
-      setName: setName,
+      userId: actingAccount.address,
+      setIsCreatedProfile: setIsCreatedProfile,
     });
+
+    // Initial value is true, then first attempt skips.
+    // Based on checkCreatedInfo result, createProfile runs next effect.
+    if (!isCreatedProfile) createProfile({ api: api, actingAccount: actingAccount });
+    setIsCreatedFnRun(true);
+  }, [isSetup, isCreatedProfile, isCreatedFnRun]);
+
+  useEffect(() => {
+    if (!isSetup || !actingAccount) return;
+
     getIndividualPost({
       api: api,
       actingAccount: actingAccount,
@@ -74,17 +87,18 @@ export default function Profile() {
       actingAccount: actingAccount,
       setBalance: setBalance,
     });
-    if (isCreatedFnRun) return;
-    if (!api) return;
-    checkCreatedInfo({
+  }, [isSetup, actingAccount]);
+
+  useEffect(() => {
+    if (!isSetup || !actingAccount) return;
+
+    getProfileForProfile({
       api: api,
       userId: actingAccount?.address,
-      setIsCreatedProfile: setIsCreatedProfile,
+      setImgUrl: setImgUrl,
+      setName: setName,
     });
-    if (isCreatedProfile) return;
-    createProfile({ api: api, actingAccount: actingAccount });
-    setIsCreatedFnRun(true);
-  }, [api, accountList, actingAccount, isSetup, isCreatedFnRun, isCreatedProfile]);
+  });
 
   return (
     <div className="flex justify-center items-center bg-gray-200 w-screen h-screen relative">

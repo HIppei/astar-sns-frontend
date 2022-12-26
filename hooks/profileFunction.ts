@@ -26,7 +26,7 @@ type PropsCCI = {
 
 // type for createProoject function
 type PropsCP = {
-  api: ApiPromise | undefined;
+  api: ApiPromise;
   actingAccount: InjectedAccountWithMeta;
 };
 
@@ -112,17 +112,16 @@ export const checkCreatedInfo = async (props: PropsCCI) => {
 
 // create profile function
 export const createProfile = async (props: PropsCP) => {
-  console.log(props.actingAccount);
   const { web3FromSource } = await import('@polkadot/extension-dapp');
-  const contract = new ContractPromise(props.api!, abi, contractAddress);
+  const contract = new ContractPromise(props.api, abi, contractAddress);
   const performingAccount = props.actingAccount;
   const injector = await web3FromSource(performingAccount.meta.source);
-  const create_profile = await contract.tx.createProfile({
+  const create_profile = contract.tx.createProfile({
     value: 0,
     gasLimit: 18750000000,
   });
   if (injector !== undefined) {
-    create_profile.signAndSend(performingAccount.address, { signer: injector.signer }, (result) => {});
+    await create_profile.signAndSend(performingAccount.address, { signer: injector.signer }, (result) => {});
   }
 };
 
@@ -159,6 +158,7 @@ export const getProfileForProfile = async (props: PropsGPFP) => {
     },
     props.userId
   );
+  console.log('output1', output);
   if (output !== undefined && output !== null) {
     props.setImgUrl(
       // @ts-ignore
@@ -188,6 +188,7 @@ export const getProfileForMessage = async (props: PropsGPFM) => {
     },
     props.userId
   );
+  console.log('output', output);
   if (output !== undefined && output !== null) {
     props.setMyImgUrl(
       // @ts-ignore
@@ -279,7 +280,6 @@ export const getFollowingList = async (props: PropsGFIL) => {
   if (output !== undefined && output !== null) {
     // @ts-ignore
     props.setFollowingList(output.toHuman());
-    console.log(output.toHuman());
   }
   return;
 };

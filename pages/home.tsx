@@ -58,6 +58,8 @@ export default function Home() {
   // Set information for the screen.
   useEffect(() => {
     if (!isSetup || !isCreatedProfile || !api || !actingAccount) return;
+    getGeneralPost({ api: api, setGeneralPostList: setGeneralPostList });
+
     getProfileForHome({
       api: api,
       userId: actingAccount.address,
@@ -76,11 +78,6 @@ export default function Home() {
     setIsDistributed(true);
   }, [isSetup, isDistributed, isCreatedProfile, actingAccount]);
 
-  useEffect(() => {
-    if (!isSetup || !isCreatedProfile || !api) return;
-    getGeneralPost({ api: api, setGeneralPostList: setGeneralPostList });
-  });
-
   return (
     <div className="flex justify-center items-center bg-gray-200 w-screen h-screen relative">
       <main className="items-center justify-center h-screen w-1/3 flex bg-white flex-col">
@@ -89,6 +86,7 @@ export default function Home() {
           afterOpenFn={setShowNewPostModal}
           api={api}
           actingAccount={actingAccount}
+          setGeneralPostList={setGeneralPostList}
         />
         <TopBar idList={accountList} imgUrl={imgUrl} setActingAccount={setActingAccount} balance={balance} />
         <div className="flex-1 overflow-auto">

@@ -1,4 +1,3 @@
-import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import React, { Dispatch } from 'react';
 

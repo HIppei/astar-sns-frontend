@@ -7,7 +7,7 @@ type Props = {
   setApi: Dispatch<React.SetStateAction<ApiPromise | undefined>>;
   setAccountList: Dispatch<React.SetStateAction<InjectedAccountWithMeta[]>>;
   setActingAccount: Dispatch<React.SetStateAction<InjectedAccountWithMeta | undefined>>;
-  setIsSetup: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSetup: Dispatch<React.SetStateAction<boolean>>;
 };
 
 // コントラクトとの接続を行うための関数

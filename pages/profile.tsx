@@ -67,6 +67,13 @@ export default function Profile() {
   useEffect(() => {
     if (!isSetup || !actingAccount) return;
 
+    getProfileForProfile({
+      api: api,
+      userId: actingAccount?.address,
+      setImgUrl: setImgUrl,
+      setName: setName,
+    });
+
     getIndividualPost({
       api: api,
       actingAccount: actingAccount,
@@ -88,17 +95,6 @@ export default function Profile() {
       setBalance: setBalance,
     });
   }, [isSetup, actingAccount]);
-
-  useEffect(() => {
-    if (!isSetup || !actingAccount) return;
-
-    getProfileForProfile({
-      api: api,
-      userId: actingAccount?.address,
-      setImgUrl: setImgUrl,
-      setName: setName,
-    });
-  });
 
   return (
     <div className="flex justify-center items-center bg-gray-200 w-screen h-screen relative">
@@ -123,7 +119,7 @@ export default function Profile() {
           idList={accountList}
           setIsCreatedFnRun={setIsCreatedFnRun}
         />
-        <div className="flex-1 overflow-scroll">
+        <div className="flex-1 overflow-auto">
           {individualPostList.map((post) => (
             <Post
               key={post.postId}

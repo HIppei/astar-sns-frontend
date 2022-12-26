@@ -54,7 +54,7 @@ export const releasePost = async (props: PropsRP) => {
   const performingAccount = props.actingAccount;
   const injector = await web3FromSource(performingAccount.meta.source);
   const date = new Date();
-  const release_post = await contract.tx.releasePost(
+  const release_post = contract.tx.releasePost(
     {
       value: 0,
       gasLimit: 50000000000,
@@ -66,7 +66,7 @@ export const releasePost = async (props: PropsRP) => {
     props.imgUrl
   );
   if (injector !== undefined) {
-    release_post.signAndSend(performingAccount.address, { signer: injector.signer }, (result) => {});
+    await release_post.signAndSend(performingAccount.address, { signer: injector.signer }, (result) => {});
   }
 };
 

@@ -1,6 +1,6 @@
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useEffect } from 'react';
 import Modal from 'react-modal';
 import { getProfileForProfile, setProfileInfo } from '../hooks/profileFunction';
 
@@ -24,15 +24,24 @@ export default function ProfileSettingModal(props: Props) {
       name: event.target.name.value,
       imgUrl: event.target.img_url.value,
     });
+
+    props.afterOpenFn(false);
+
+    // Consume some time to correctly retrieve profile info.
+    alert(`img_url: ${event.target.img_url.value}\nname: ${event.target.name.value}`);
+
     await getProfileForProfile({
       api: props.api,
       userId: props.actingAccount?.address,
       setImgUrl: props.setImgUrl,
       setName: props.setName,
     });
-    props.afterOpenFn(false);
-    alert(`img_url: ${event.target.img_url.value}\nname: ${event.target.name.value}`);
   };
+
+  useEffect(() => {
+    Modal.setAppElement(document.querySelector('body')!);
+  }, []);
+
   return (
     <Modal className="flex items-center justify-center h-screen" isOpen={props.isOpen}>
       <form onSubmit={submit} className="h-1/2 w-1/5 bg-gray-200 flex flex-col items-center justify-center">

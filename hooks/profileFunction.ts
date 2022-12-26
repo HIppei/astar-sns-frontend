@@ -158,7 +158,6 @@ export const getProfileForProfile = async (props: PropsGPFP) => {
     },
     props.userId
   );
-  console.log('output1', output);
   if (output !== undefined && output !== null) {
     props.setImgUrl(
       // @ts-ignore
@@ -188,7 +187,6 @@ export const getProfileForMessage = async (props: PropsGPFM) => {
     },
     props.userId
   );
-  console.log('output', output);
   if (output !== undefined && output !== null) {
     props.setMyImgUrl(
       // @ts-ignore
@@ -253,7 +251,7 @@ export const setProfileInfo = async (props: PropSPI) => {
   const contract = new ContractPromise(props.api!, abi, contractAddress!);
   const performingAccount = props.actingAccount;
   const injector = await web3FromSource(performingAccount!.meta.source);
-  const set_profile_info = await contract.tx.setProfileInfo(
+  const set_profile_info = contract.tx.setProfileInfo(
     {
       value: 0,
       gasLimit: 187500000000,
@@ -262,7 +260,7 @@ export const setProfileInfo = async (props: PropSPI) => {
     props.imgUrl
   );
   if (injector !== undefined) {
-    set_profile_info.signAndSend(performingAccount!.address, { signer: injector.signer }, (result) => {});
+    await set_profile_info.signAndSend(performingAccount!.address, { signer: injector.signer }, (result) => {});
   }
 };
 

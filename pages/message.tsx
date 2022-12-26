@@ -112,7 +112,7 @@ export default function Message() {
     // Initial value is true, then first attempt skips.
     // Based on checkCreatedInfo result, createProfile runs.
     if (!isCreatedProfile) createProfile({ api: api, actingAccount: actingAccount });
-  }, [isSetup, isCreatedProfile]);
+  }, [isSetup, isCreatedProfile, actingAccount]);
 
   useEffect(() => {
     //connect to contract

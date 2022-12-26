@@ -1,6 +1,6 @@
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import Modal from 'react-modal';
 
 import { getGeneralPost, PostType, releasePost } from '../hooks/postFunction';
@@ -13,6 +13,11 @@ type Props = {
   actingAccount: InjectedAccountWithMeta | undefined;
   setGeneralPostList: Dispatch<SetStateAction<PostType[]>>;
 };
+
+if (typeof window === 'object') {
+  const body = document.querySelector('body');
+  if (body) Modal.setAppElement(body);
+}
 
 export default function PostModal(props: Props) {
   const submit = async (event: any) => {
@@ -29,10 +34,6 @@ export default function PostModal(props: Props) {
 
     await getGeneralPost({ api: props.api, setGeneralPostList: props.setGeneralPostList });
   };
-
-  useEffect(() => {
-    Modal.setAppElement(document.querySelector('body')!);
-  }, []);
 
   return (
     <Modal ariaHideApp={false} className="flex items-center justify-center h-screen" isOpen={props.isOpen}>

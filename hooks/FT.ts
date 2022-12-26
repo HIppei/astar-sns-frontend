@@ -45,16 +45,15 @@ export const transfer = async (props: PropsTF) => {
   const contract = new ContractPromise(props.api!, abi, contractAddress);
   const performingAccount = props.actingAccount;
   const injector = await web3FromSource(performingAccount.meta.source);
-  const date = new Date();
-  const transfer = await contract.tx.transfer(
+  const transfer = contract.tx.transfer(
     {
       value: 0,
-      gasLimit: 100000,
+      gasLimit: 200000000000,
     },
     props.amount
   );
   if (injector !== undefined) {
-    transfer.signAndSend(performingAccount.address, { signer: injector.signer }, (result) => {});
+    await transfer.signAndSend(performingAccount.address, { signer: injector.signer }, (result) => {});
   }
 };
 
@@ -65,9 +64,9 @@ export const distributeReferLikes = async (props: PropsDRL) => {
   const injector = await web3FromSource(performingAccount.meta.source);
   const transfer = contract.tx.distributeReferLikes({
     value: 0,
-    gasLimit: 100000,
+    gasLimit: 200000000000,
   });
   if (injector !== undefined) {
-    transfer.signAndSend(performingAccount.address, { signer: injector.signer }, (result) => {});
+    await transfer.signAndSend(performingAccount.address, { signer: injector.signer }, (result) => {});
   }
 };

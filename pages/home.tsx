@@ -70,13 +70,16 @@ export default function Home() {
       actingAccount: actingAccount,
       setBalance: setBalance,
     });
+
     if (isDistributed) return;
+    setIsDistributed(true);
     distributeReferLikes({
       api: api,
       actingAccount: actingAccount,
+    }).finally(() => {
+      setIsDistributed(false);
     });
-    setIsDistributed(true);
-  }, [isSetup, isDistributed, isCreatedProfile, actingAccount]);
+  }, [isSetup, isCreatedProfile, actingAccount]);
 
   return (
     <div className="flex justify-center items-center bg-gray-200 w-screen h-screen relative">

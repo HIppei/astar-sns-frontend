@@ -46,11 +46,7 @@ export default function Profile() {
 
   // Profile check and creation.
   useEffect(() => {
-    // Confirm if the connection establishes.
-    if (!isSetup || isCreatedFnRun) return;
-
-    // Check parameters exist to pass proper values.
-    if (!api || !actingAccount?.address) return;
+    if (!isSetup || isCreatedFnRun || !api || !actingAccount) return;
 
     checkCreatedInfo({
       api: api,
@@ -62,7 +58,7 @@ export default function Profile() {
     // Based on checkCreatedInfo result, createProfile runs next effect.
     if (!isCreatedProfile) createProfile({ api: api, actingAccount: actingAccount });
     setIsCreatedFnRun(true);
-  }, [isSetup, isCreatedProfile, isCreatedFnRun]);
+  }, [isSetup, isCreatedProfile, isCreatedFnRun, actingAccount]);
 
   useEffect(() => {
     if (!isSetup || !actingAccount) return;

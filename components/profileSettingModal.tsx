@@ -1,6 +1,6 @@
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import React, { Dispatch, useEffect } from 'react';
+import React, { Dispatch } from 'react';
 import Modal from 'react-modal';
 import { getProfileForProfile, setProfileInfo } from '../hooks/profileFunction';
 
@@ -13,6 +13,11 @@ type Props = {
   setName: Dispatch<React.SetStateAction<string>>;
   actingAccount: InjectedAccountWithMeta | undefined;
 };
+
+if (typeof window === 'object') {
+  const body = document.querySelector('body');
+  if (body) Modal.setAppElement(body);
+}
 
 export default function ProfileSettingModal(props: Props) {
   const submit = async (event: any) => {
@@ -27,8 +32,10 @@ export default function ProfileSettingModal(props: Props) {
 
     props.afterOpenFn(false);
 
-    // Consume some time to correctly retrieve profile info.
-    alert(`img_url: ${event.target.img_url.value}\nname: ${event.target.name.value}`);
+    const now = new Date();
+    while (new Date().getTime() - now.getTime() <= 500) {
+      // wait for sone time.
+    }
 
     await getProfileForProfile({
       api: props.api,
@@ -36,11 +43,9 @@ export default function ProfileSettingModal(props: Props) {
       setImgUrl: props.setImgUrl,
       setName: props.setName,
     });
-  };
 
-  useEffect(() => {
-    Modal.setAppElement(document.querySelector('body')!);
-  }, []);
+    alert(`img_url: ${event.target.img_url.value}\nname: ${event.target.name.value}`);
+  };
 
   return (
     <Modal className="flex items-center justify-center h-screen" isOpen={props.isOpen}>

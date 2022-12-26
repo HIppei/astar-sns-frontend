@@ -7,13 +7,14 @@ import { follow } from '../../hooks/profileFunction';
 
 type Props = {
   imgUrl: string;
-  api: ApiPromise;
-  actingAccount: InjectedAccountWithMeta;
+  api: ApiPromise | undefined;
+  actingAccount: InjectedAccountWithMeta | undefined;
   userId: string;
 };
 
 export const SmallerProfileIcon: FC<Props> = (props: Props) => {
   const implementFollow = async () => {
+    if(!props.api || !props.actingAccount)return
     if (confirm('Would you like to follow this account?')) {
       await follow({
         api: props.api,
@@ -24,7 +25,7 @@ export const SmallerProfileIcon: FC<Props> = (props: Props) => {
   };
   return (
     <Image
-      onClick={implementFollow}
+      onClick={props.api && implementFollow}
       className="rounded-full h-12 w-12 mx-2"
       src={props.imgUrl}
       alt="profile_logo"

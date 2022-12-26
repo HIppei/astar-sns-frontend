@@ -93,6 +93,7 @@ export default function Home() {
           {generalPostList.map((post) => (
             <Post
               key={post.postId}
+              actingAccount={actingAccount}
               name={post.name}
               time={post.createdTime}
               description={post.description}
@@ -101,8 +102,8 @@ export default function Home() {
               post_img_url={post.imgUrl}
               userId={post.userId}
               postId={post.postId}
-              actingAccount={actingAccount}
               api={api}
+              setGeneralPostList={setGeneralPostList}
             />
           ))}
         </div>

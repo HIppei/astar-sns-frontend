@@ -1,10 +1,27 @@
+import { ApiPromise } from '@polkadot/api';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import Image from 'next/image';
+import { Dispatch, SetStateAction } from 'react';
 import { AiFillHeart } from 'react-icons/ai';
 
-import { addLikes } from '../hooks/postFunction';
+import { addLikes, getGeneralPost, PostType } from '../hooks/postFunction';
 import { SmallerProfileIcon } from './atoms/smallerProfileIcon';
 
-export default function Post(props: any) {
+type Props = {
+  api?: ApiPromise;
+  actingAccount: InjectedAccountWithMeta | undefined;
+  userId: string;
+  user_img_url: string;
+  name: string;
+  postId: number;
+  time: string;
+  description: string;
+  post_img_url: string;
+  num_of_likes: number;
+  setGeneralPostList?: Dispatch<SetStateAction<PostType[]>>;
+};
+
+export default function Post(props: Props) {
   return (
     <div className="px-3 items-center border-b-2 py-1 ">
       <div className="flex flex-row justify-center">
@@ -33,12 +50,18 @@ export default function Post(props: any) {
           <div className="flex flex-row w-full pl-[85px] items-center">
             <div className="text-xl mr-1">{props.num_of_likes}</div>
             <AiFillHeart
-              onClick={() => {
-                addLikes({
+              onClick={async () => {
+                if (!props.api || !props.actingAccount || !props.setGeneralPostList) return;
+                await addLikes({
                   api: props.api,
                   actingAccount: props.actingAccount,
                   postId: props.postId,
                 });
+                const now = new Date();
+                while (new Date().getTime() - now.getTime() <= 500) {
+                  // wait for around 500 ms
+                }
+                await getGeneralPost({ api: props.api, setGeneralPostList: props.setGeneralPostList });
               }}
               className="fill-[#FD3509] h-[30px] w-[30px]"
             />

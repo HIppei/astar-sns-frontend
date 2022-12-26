@@ -31,7 +31,7 @@ export default function Message() {
   const [userImgUrl, setUserImgUrl] = useState('');
   const [myImgUrl, setMyImgUrl] = useState('');
   const [messageListId, setMessageListId] = useState<string>('');
-  // const [messageMemberList, setMessageMemberList] = useState([]);
+  const [messageMemberList, setMessageMemberList] = useState<JSX.Element[]>([]);
   const [myUserId, setMyUserId] = useState('');
   const [isSetup, setIsSetup] = useState(false);
   const [profile, setProfile] = useState<ProfileType>();
@@ -60,26 +60,29 @@ export default function Message() {
       const imgUrl = friendProfile?.imgUrl;
 
       const memberListFactor = (
-        <MessageMember
-          name={name}
-          img_url={imgUrl}
-          last_message={lastMessage}
-          setShowMessageModal={setShowMessageModal}
-          setUserName={setUserName}
-          setUserImgUrl={setUserImgUrl}
-          setMyImgUrl={setMyImgUrl}
-          messageListId={idList[i]}
-          setMessageListId={setMessageListId}
-          setMessageList={setMessageList}
-          messageList={messageList}
-          getMessageList={getMessageList}
-          setMyUserId={setMyUserId}
-          myUserId={profile?.userId}
-          api={api}
-        />
+        <div key={i}>
+          <MessageMember
+            name={name}
+            img_url={imgUrl}
+            last_message={lastMessage}
+            setShowMessageModal={setShowMessageModal}
+            setUserName={setUserName}
+            setUserImgUrl={setUserImgUrl}
+            setMyImgUrl={setMyImgUrl}
+            messageListId={idList[i]}
+            setMessageListId={setMessageListId}
+            setMessageList={setMessageList}
+            messageList={messageList}
+            getMessageList={getMessageList}
+            setMyUserId={setMyUserId}
+            myUserId={profile?.userId}
+            api={api}
+          />
+        </div>
       );
       memberList.push(memberListFactor);
     }
+    setMessageMemberList(memberList);
   };
 
   // Connection establishment.
@@ -113,8 +116,7 @@ export default function Message() {
 
   useEffect(() => {
     //connect to contract
-    if (!isSetup || !api) return;
-    if (!actingAccount) return;
+    if (!isSetup || !api || !actingAccount) return;
 
     // get profile
     getProfileForMessage({
@@ -133,13 +135,13 @@ export default function Message() {
       actingAccount: actingAccount,
       setBalance: setBalance,
     });
-  }, [isSetup]);
+  }, [isSetup, actingAccount]);
 
   return !showMessageModal ? (
     <div className="flex justify-center items-center bg-gray-200 w-screen h-screen relative">
       <main className="items-center h-screen w-1/3 flex bg-white flex-col">
         <TopBar idList={accountList} imgUrl={imgUrl} setActingAccount={setActingAccount} balance={balance} />
-        {/* <div className="flex-1 overflow-scroll w-full mt-1">{messageMemberList}</div> */}
+        <div className="flex-1 overflow-auto w-full mt-1">{messageMemberList}</div>
         <div className="w-full">
           <BottomNavigation />
         </div>

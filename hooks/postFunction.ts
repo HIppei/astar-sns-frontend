@@ -95,7 +95,7 @@ export const addLikes = async (props: PropsAL) => {
   const contract = new ContractPromise(props.api, abi, contractAddress);
   const performingAccount = props.actingAccount;
   const injector = await web3FromSource(performingAccount!.meta.source);
-  const add_likes = await contract.tx.addLikes(
+  const add_likes = contract.tx.addLikes(
     {
       value: 0,
       gasLimit: 18850000000,
@@ -103,7 +103,7 @@ export const addLikes = async (props: PropsAL) => {
     props.postId
   );
   if (injector !== undefined) {
-    add_likes.signAndSend(performingAccount!.address, { signer: injector.signer }, (result) => {});
+    await add_likes.signAndSend(performingAccount!.address, { signer: injector.signer }, (result) => {});
   }
 };
 

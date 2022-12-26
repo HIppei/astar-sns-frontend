@@ -129,6 +129,9 @@ export default function Profile() {
               num_of_likes={post.numOfLikes}
               user_img_url={imgUrl}
               post_img_url={post.imgUrl}
+              actingAccount={actingAccount}
+              userId={post.userId}
+              postId={post.postId}
             />
           ))}
         </div>

@@ -34,7 +34,7 @@ export default function ProfileSettingModal(props: Props) {
 
     const now = new Date();
     while (new Date().getTime() - now.getTime() <= 500) {
-      // wait for sone time.
+      // wait for some time.
     }
 
     await getProfileForProfile({

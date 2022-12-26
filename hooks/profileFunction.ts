@@ -234,7 +234,7 @@ export const follow = async (props: PropsF) => {
   const contract = new ContractPromise(props.api, abi, contractAddress);
   const performingAccount = props.actingAccount;
   const injector = await web3FromSource(performingAccount!.meta.source);
-  const follow = await contract.tx.follow(
+  const follow = contract.tx.follow(
     {
       value: 0,
       gasLimit: 200000000000,
@@ -242,7 +242,7 @@ export const follow = async (props: PropsF) => {
     props.followedId
   );
   if (injector !== undefined) {
-    follow.signAndSend(performingAccount!.address, { signer: injector.signer }, (result) => {});
+    await follow.signAndSend(performingAccount!.address, { signer: injector.signer }, (result) => {});
   }
 };
 

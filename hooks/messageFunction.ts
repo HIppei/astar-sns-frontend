@@ -41,10 +41,10 @@ export const sendMessage = async (props: PropsSM) => {
   const performingAccount = props.actingAccount;
   const injector = await web3FromSource(performingAccount.meta.source);
   const date = new Date();
-  const add_likes = await contract.tx.sendMessage(
+  const sendMessage = contract.tx.sendMessage(
     {
       value: 0,
-      gasLimit: 100000,
+      gasLimit: 200000000000,
     },
     props.message,
     props.id,
@@ -53,7 +53,7 @@ export const sendMessage = async (props: PropsSM) => {
       [date.getHours().toString().padStart(2, '0'), date.getMinutes().toString().padStart(2, '0')].join(':')
   );
   if (injector !== undefined) {
-    add_likes.signAndSend(performingAccount.address, { signer: injector.signer }, (result) => {});
+    await sendMessage.signAndSend(performingAccount.address, { signer: injector.signer }, (result) => {});
   }
 };
 

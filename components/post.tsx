@@ -58,8 +58,8 @@ export default function Post(props: Props) {
                   postId: props.postId,
                 });
                 const now = new Date();
-                while (new Date().getTime() - now.getTime() <= 500) {
-                  // wait for around 500 ms
+                while (new Date().getTime() - now.getTime() <= 1000) {
+                  // wait for some time.
                 }
                 await getGeneralPost({ api: props.api, setGeneralPostList: props.setGeneralPostList });
               }}

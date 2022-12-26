@@ -1,10 +1,10 @@
 import { ApiPromise } from '@polkadot/api';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 
 import { FormBox } from '../components/molecules/formBox';
 import { MessageBar } from '../components/organisms/messageBar';
-import type { MessageType } from '../hooks/messageFunction';
+import { getMessageList, MessageType } from '../hooks/messageFunction';
 import { sendMessage } from '../hooks/messageFunction';
 import Message from './message';
 
@@ -14,13 +14,23 @@ type Props = {
   messageListId: string;
   userImgUrl: string;
   userName: string;
-  messageList: Array<MessageType>;
   setShowMessageModal: Dispatch<React.SetStateAction<boolean>>;
   myUserId: string;
   myImgUrl: string;
 };
 
 export default function MessageRoom(props: Props) {
+  const [messegaList, setMessageList] = useState<MessageType[]>([]);
+
+  useEffect(() => {
+    getMessageList({
+      api: props.api,
+      id: Number(props.messageListId),
+    }).then((res: any) => {
+      setMessageList(res);
+    });
+  }, []);
+
   const submit = async (event: any) => {
     event.preventDefault();
     if (!props.actingAccount) return;
@@ -32,6 +42,18 @@ export default function MessageRoom(props: Props) {
       id: props.messageListId,
     });
     event.target.message.value = '';
+
+    const now = new Date();
+    while (new Date().getTime() - now.getTime() <= 3000) {
+      // wait for some time.
+    }
+
+    getMessageList({
+      api: props.api,
+      id: Number(props.messageListId),
+    }).then((res: any) => {
+      setMessageList(res);
+    });
   };
 
   return (
@@ -42,8 +64,8 @@ export default function MessageRoom(props: Props) {
           userName={props.userName}
           setShowMessageModal={props.setShowMessageModal}
         />
-        <div className="flex-1 overflow-scroll w-full">
-          {props.messageList.map((message, index) => (
+        <div className="flex-1 overflow-auto w-full">
+          {messegaList.map((message, index) => (
             <div key={index}>
               <Message
                 account_id={props.myUserId}

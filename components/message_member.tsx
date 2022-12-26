@@ -1,18 +1,14 @@
 import Image from 'next/image';
 
-export default function MessageMember(props: any) {
+type Props = {
+  name: string;
+  last_message: string;
+  img_url: string;
+};
+
+export default function MessageMember(props: Props) {
   return (
-    <div
-      className="flex flex-row border-b-2 border-[#CECECE] w-full items-center"
-      onClick={() => {
-        props.setShowMessageModal(true);
-        props.setUserName(props.name);
-        props.setUserImgUrl(props.img_url);
-        props.setMessageListId(props.messageListId);
-        props.setMessageList(props.messageList);
-        props.setMyUserId(props.myUserId);
-      }}
-    >
+    <div className="flex flex-row border-b-2 border-[#CECECE] w-full items-center">
       {props.img_url && (
         <Image
           className="rounded-full h-12 w-12 mx-2"
@@ -21,7 +17,6 @@ export default function MessageMember(props: any) {
           width={1000}
           height={1000}
           quality={100}
-          onClick={() => props.setShowMessageModal(true)}
         />
       )}
       <div className="flex items-start justify-center flex-col py-1">

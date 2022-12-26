@@ -7,7 +7,7 @@ import MessageMember from '../components/message_member';
 import TopBar from '../components/topBar';
 import { balenceOf } from '../hooks/FT';
 import { connectToContract } from '../hooks/connect';
-import { getLastMessage, getMessageList } from '../hooks/messageFunction';
+import { getLastMessage } from '../hooks/messageFunction';
 import type { ProfileType } from '../hooks/profileFunction';
 import {
   checkCreatedInfo,
@@ -25,7 +25,6 @@ export default function Message() {
   const [imgUrl, setImgUrl] = useState('');
   const [isCreatedProfile, setIsCreatedProfile] = useState(true);
   const [friendList, setFriendList] = useState([]);
-  const [messageList, setMessageList] = useState([]);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [userName, setUserName] = useState('');
   const [userImgUrl, setUserImgUrl] = useState('');
@@ -47,10 +46,9 @@ export default function Message() {
       });
       const idList = profile?.messageListIdList || [];
       let lastMessage = '';
-      const messageList = await getMessageList({
-        api: api,
-        id: idList[i],
-      });
+
+      console.log('idList', idList);
+
       if (idList !== null) {
         lastMessage = await getLastMessage({ api: api, id: idList[i] });
       }
@@ -60,24 +58,17 @@ export default function Message() {
       const imgUrl = friendProfile?.imgUrl;
 
       const memberListFactor = (
-        <div key={i}>
-          <MessageMember
-            name={name}
-            img_url={imgUrl}
-            last_message={lastMessage}
-            setShowMessageModal={setShowMessageModal}
-            setUserName={setUserName}
-            setUserImgUrl={setUserImgUrl}
-            setMyImgUrl={setMyImgUrl}
-            messageListId={idList[i]}
-            setMessageListId={setMessageListId}
-            setMessageList={setMessageList}
-            messageList={messageList}
-            getMessageList={getMessageList}
-            setMyUserId={setMyUserId}
-            myUserId={profile?.userId}
-            api={api}
-          />
+        <div
+          key={i}
+          onClick={() => {
+            setShowMessageModal(!showMessageModal);
+            setUserName(name);
+            setUserImgUrl(imgUrl);
+            setMessageListId(String(idList[i]));
+            setMyUserId(String(profile?.userId));
+          }}
+        >
+          <MessageMember name={name} img_url={imgUrl} last_message={lastMessage} />
         </div>
       );
       memberList.push(memberListFactor);
@@ -127,8 +118,6 @@ export default function Message() {
       setFriendList: setFriendList,
       setProfile: setProfile,
     });
-    // create message member list UI
-    createMessageMemberList();
 
     balenceOf({
       api: api,
@@ -136,6 +125,12 @@ export default function Message() {
       setBalance: setBalance,
     });
   }, [isSetup, actingAccount]);
+
+  useEffect(() => {
+    if (!isSetup || !api || !actingAccount) return;
+    // create message member list UI
+    createMessageMemberList();
+  }, [friendList]);
 
   return !showMessageModal ? (
     <div className="flex justify-center items-center bg-gray-200 w-screen h-screen relative">
@@ -157,7 +152,6 @@ export default function Message() {
       api={api}
       actingAccount={actingAccount}
       messageListId={messageListId}
-      messageList={messageList}
     />
   );
 }
